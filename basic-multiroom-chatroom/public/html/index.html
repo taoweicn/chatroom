@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic ChatRoom</title>
+    <style>
+        #chat{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="chat">
+    <h1>Basic ChatRoom</h1>
+    <input type="text" id="input">
+    <button type="button" id="send">发送</button>
+    <fieldset>
+        <legend>聊天室</legend>
+        <div id="room"></div>
+    </fieldset>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="../js/chat.js"></script>
+</body>
+</html>
