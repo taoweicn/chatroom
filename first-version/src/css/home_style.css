@@ -1,0 +1,236 @@
+@charset "UTF-8";
+/*定义变量区*/
+body {
+  font-family: SourceSansLocal,source-sans-pro,Source Sans Pro,-apple-system,Roboto,pt sans,calibri,sans-serif;
+  display: flex;
+  background-color: #fff; }
+
+/*侧边栏*/
+aside {
+  position: fixed;
+  width: 90px;
+  height: 100%;
+  background-color: #fff;
+  border-right: 1px solid #eee; }
+  aside header {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    background-color: #753a88; }
+    aside header svg {
+      position: absolute;
+      top: 18px;
+      left: 36px;
+      width: 18px;
+      height: auto;
+      color: rgba(255, 255, 255, 0.5);
+      fill: currentColor; }
+  aside .side-btn {
+    position: relative;
+    height: calc(100% - 60px); }
+    aside .side-btn li {
+      width: 100%;
+      height: 65px;
+      line-height: 65px;
+      text-align: center;
+      font-size: 22px;
+      color: #999;
+      cursor: pointer; }
+      aside .side-btn li:nth-last-child(1) {
+        position: absolute;
+        bottom: 0; }
+      aside .side-btn li:nth-last-child(2) {
+        position: absolute;
+        bottom: 65px; }
+
+/*主视区头部*/
+main {
+  margin-left: 90px;
+  width: calc(100% - 90px); }
+  main .header {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-image: linear-gradient(to left, #cc2b5e, #753a88);
+    z-index: 10;
+    /*用户头像容器*/ }
+    main .header p {
+      position: absolute;
+      left: 20px;
+      line-height: 60px;
+      font-size: 24px;
+      font-weight: 300;
+      color: #fff; }
+    main .header .nav-avatar {
+      display: flex;
+      position: absolute;
+      top: 5px;
+      right: 100px;
+      width: 70px;
+      height: 50px;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      /*用户头像图片*/ }
+      main .header .nav-avatar img {
+        margin: auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        cursor: pointer; }
+
+/*选择房间菜单*/
+.room-menu {
+  padding: 110px 24px 24px 24px; }
+
+/*宣传栏*/
+.info-wrap {
+  position: relative;
+  display: flex;
+  padding-bottom: 8px;
+  color: #bcbcbc;
+  border-bottom: 3px solid #eee; }
+  .info-wrap .info {
+    margin: 0 16px;
+    font-size: 16px; }
+  .info-wrap .phones {
+    position: absolute;
+    right: 0;
+    font-size: 16px; }
+    .info-wrap .phones > i:first-child {
+      position: absolute;
+      top: -24px;
+      right: 150px;
+      background-color: #fff;
+      font-size: 65px;
+      color: #eee; }
+    .info-wrap .phones a {
+      margin-left: 18px; }
+      .info-wrap .phones a:hover {
+        text-decoration: underline; }
+
+/*新键房间按钮*/
+.create-btn {
+  margin: 30px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; }
+  .create-btn p {
+    margin-right: 30px;
+    color: #bcbcbc; }
+  .create-btn button {
+    font-size: 12px;
+    padding: 8px 16px;
+    background-color: #fff;
+    color: #f68d42;
+    border: 1px solid #f68d42;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer; }
+
+/*主题选择列表*/
+.subject-list {
+  /*最后一个more元素*/ }
+  .subject-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 -5px;
+    height: 88px;
+    overflow: hidden; }
+    .subject-list ul li {
+      margin: 5px;
+      width: 130px;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      text-overflow: ellipsis;
+      color: gray;
+      background-color: #f2f0ed;
+      border-radius: 4px;
+      cursor: pointer; }
+      .subject-list ul li:hover {
+        background-color: #e7e4de; }
+  .subject-list .more-subject:last-child {
+    margin: 4px;
+    background-color: #fff;
+    border: 1px solid #f2f0ed; }
+    .subject-list .more-subject:last-child:hover {
+      background-color: #fafafa; }
+
+/*房间列表*/
+.room-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px 5px;
+  background-color: #f1f1f1; }
+  .room-list .room-detail {
+    margin: 10px;
+    padding: 14px 12px;
+    width: 240px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #fbfbfb;
+    color: gray; }
+    .room-list .room-detail:hover {
+      background-color: #fff; }
+    .room-list .room-detail:hover .user-count {
+      display: none; }
+    .room-list .room-detail:hover .view {
+      display: block; }
+    .room-list .room-detail header {
+      display: flex; }
+      .room-list .room-detail header img {
+        width: 30px;
+        height: 30px; }
+      .room-list .room-detail header .card-title {
+        height: 30px;
+        line-height: 30px;
+        margin-left: 10px;
+        font-size: 18px;
+        font-weight: 600;
+        overflow: hidden;
+        cursor: pointer; }
+        .room-list .room-detail header .card-title:hover {
+          text-decoration: underline; }
+    .room-list .room-detail p {
+      height: 36px;
+      line-height: 36px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden; }
+    .room-list .room-detail .tags {
+      display: flex;
+      margin: 0 -5px;
+      height: 30px;
+      padding-bottom: 15px; }
+      .room-list .room-detail .tags div {
+        margin: 0 5px;
+        padding: 6px 9px;
+        border-radius: 3px;
+        color: #fff;
+        background-color: #d6d6d6;
+        cursor: pointer; }
+    .room-list .room-detail footer {
+      position: relative;
+      padding-top: 10px;
+      border-top: 1px dotted #f2f0ed; }
+      .room-list .room-detail footer .user-count {
+        display: inline-block;
+        padding: 8px 15px;
+        border: 1px solid #333;
+        border-radius: 5px; }
+      .room-list .room-detail footer .view {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 0;
+        padding: 8px 15px;
+        border-radius: 5px;
+        background-color: #f68d42;
+        color: #fff;
+        cursor: pointer; }
+        .room-list .room-detail footer .view:hover {
+          background-color: #dc7f3c; }
+
+/*# sourceMappingURL=home_style.css.map */
