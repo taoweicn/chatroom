@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="../public/css/font-awesome-4.7.0/css/font-awesome.min.css">
     <!--浏览器默认样式重置-->
     <link rel="stylesheet" href="../public/css/reset.css">
+    <!--头部和侧边栏共用样式-->
+    <link rel="stylesheet" href="../public/css/header_and_aside_style.css">
     <!--自定义样式-->
     <link rel="stylesheet" href="../src/css/home_style.css">
 </head>
 <body>
+<!--侧边栏-->
 <aside>
     <header>
         <!--logo图案-->
@@ -35,13 +38,15 @@
             <i class="fa fa-users" aria-hidden="true"></i>
         </li>
         <li>
-            <i class="fa fa-plus" aria-hidden="true"></i>
+            <i class="fa fa-plus create-room" aria-hidden="true"></i>
         </li>
         <li>
             <i class="fa fa-bars" aria-hidden="true"></i>
         </li>
     </ul>
 </aside>
+
+<!--主要部分-->
 <main>
     <header class="header">
         <p>Explore</p>
@@ -78,7 +83,7 @@
         <!--新键房间按钮-->
         <div class="create-btn">
             <p>Can't find what you're looking for?</p>
-            <button>CREATE YOUR OWN</button>
+            <button class="create-room">CREATE YOUR OWN</button>
         </div>
         <!--主题选择列表-->
         <div class="subject-list">
@@ -453,5 +458,29 @@
     </section>
 </main>
 
+<!--创建新房间弹出的遮罩层-->
+<div class="mask">
+    <div class="close-btn">
+        &times;
+    </div>
+    <div class="mask-title">
+        <p>Think big,</p>
+        <p>start small, grow fast</p>
+    </div>
+    <input type="text" placeholder="your community name">
+    <div class="domain">
+        gitter.im/<input type="text" placeholder="your-community-domain">
+    </div>
+    <div class="mask-footer">
+        do you want to start a community for one of your <a href="#">github projects</a>?
+    </div>
+    <div class="next">
+        <button>NEXT</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../src/js/home_js.js"></script>
 </body>
 </html>
