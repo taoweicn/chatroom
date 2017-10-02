@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ChatRoom</title>
+    <!--Font Awesome图标库-->
+    <link rel="stylesheet" href="../public/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--浏览器默认样式重置-->
+    <link rel="stylesheet" href="../public/css/reset.css">
+    <!--头部和侧边栏共用样式-->
+    <link rel="stylesheet" href="../public/css/header_and_aside_style.css">
+    <!--自定义样式-->
+    <link rel="stylesheet" href="../src/css/chatroom_style.css">
+</head>
+<body>
+<!--侧边栏-->
+<aside>
+    <header>
+        <!--logo图案-->
+        <svg>
+            <rect x="15" y="5" width="2" height="10"></rect>
+            <rect x="10" y="5" width="2" height="20"></rect>
+            <rect x="5" y="5" width="2" height="20"></rect>
+            <rect width="2" height="15"></rect>
+        </svg>
+    </header>
+    <!--侧边按钮组-->
+    <ul class="side-btn">
+        <li>
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+        </li>
+        <li>
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </li>
+        <li>
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+        </li>
+        <li>
+            <i class="fa fa-users" aria-hidden="true"></i>
+        </li>
+        <li>
+            <i class="fa fa-plus create-room" aria-hidden="true"></i>
+        </li>
+        <li>
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </li>
+    </ul>
+</aside>
+
+<!--主要部分-->
+<main>
+    <header class="header">
+        <div class="room-logo">
+            <img src="../public/img/vue.png" alt="vue logo">
+        </div>
+        <p class="room-name">vuejs/vue</p>
+        <span class="room-description">
+            NO LONGER MAINTAINED: Please migrate to http://chat.vuejs.org/ for the new and improved community chat
+        </span>
+        <!--顶部右上角按钮组-->
+        <div class="func-btn">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-sliders" aria-hidden="true"></i>
+        </div>
+        <div class="nav-avatar">
+            <img src="../public/img/avatar.jpg" alt="头像">
+        </div>
+    </header>
+
+    <section class="chatroom-container">
+        <!--聊天区域-->
+        <section class="chat-area">
+            <!--对话框-->
+            <div class="dialog">
+                <!--某条消息-->
+                <div class="chat-message">
+                    <div class="message-container">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                            <img src="../public/img/avatar.jpg" alt="avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                    <span>taowei</span>
+                                    <span>@taoweicn</span>
+                                </span>
+                                <span class="message-time">
+                                    10月 01 20.47
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+                <div class="chat-message continuous-message">
+                    <div class="message-container unread-message">
+                        <!--用户头像-->
+                        <div class="user-avatar">
+                        </div>
+                        <!--消息内容-->
+                        <div class="message-content">
+                            <!--消息信息-->
+                            <div class="message-info">
+                                <span class="user-name">
+                                </span>
+                                <span class="message-time">
+                                </span>
+                            </div>
+                            <!--消息的具体内容-->
+                            <div class="message-words">
+                                这个界面的样式好多啊啊啊啊啊
+                            </div>
+                        </div>
+                    </div>
+                </div><!--一条消息截止-->
+
+
+
+            </div>
+            <!--输入框-->
+            <div class="input-area">
+                <div class="nav-avatar">
+                    <img src="../public/img/avatar.jpg" alt="头像">
+                </div>
+                <div class="input-box">
+                    <textarea placeholder="Click here to type a chat message."></textarea>
+                </div>
+            </div>
+        </section>
+        <!--聊天室信息-->
+        <section class="room-info">
+            <!--在聊天室的人-->
+            <div class="room-people">
+                <p>PEOPLE</p>
+                <div class="avatar-images">
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+                    <div><img src="../public/img/avatar.jpg" alt="头像"></div>
+
+                </div>
+            </div>
+            <div class="add-people-btn">
+                <button>ADD</button>
+                <p>SEE ALL<span>(12345 PEOPLE)</span></p>
+            </div>
+            <!--房间活动-->
+            <div class="room-activity">
+                <p>ACTIVITY</p>
+                <ul>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas2010</span>
+                            <span>banned</span>
+                            <span>@ComputerSettings</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas2010</span>
+                            <span>banned</span>
+                            <span>@ComputerSettings</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas2010</span>
+                            <span>banned</span>
+                            <span>@ComputerSettings</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texasabcdefg2010</span>
+                            <span>banned</span>
+                            <span>@Siri</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas2010</span>
+                            <span>banned</span>
+                            <span>@ComputerSettings</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas2010</span>
+                            <span>banned</span>
+                            <span>@Computer</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                    <li class="activity-list">
+                        <div class="activity-content">
+                            <span>@texas</span>
+                            <span>banned</span>
+                            <span>@Computer</span>
+                        </div>
+                        <div class="activity-time">10月02</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+</main>
+
+<!--创建新房间弹出的遮罩层-->
+<div class="mask">
+    <div class="close-btn">
+        &times;
+    </div>
+    <div class="mask-title">
+        <p>Think big,</p>
+        <p>start small, grow fast</p>
+    </div>
+    <input type="text" placeholder="your community name">
+    <div class="domain">
+        gitter.im/<input type="text" placeholder="your-community-domain">
+    </div>
+    <div class="mask-footer">
+        do you want to start a community for one of your <a href="#">github projects</a>?
+    </div>
+    <div class="next">
+        <button>NEXT</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../src/js/chatroom_js.js"></script>
+</body>
+</html>
