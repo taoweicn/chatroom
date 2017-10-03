@@ -87,7 +87,7 @@
         </div>
         <!--主题选择列表-->
         <div class="subject-list">
-            <ul>
+            <ul id="subject-list">
                 <li>Suggested</li>
                 <li>Frontend</li>
                 <li>Mobile</li>
@@ -113,7 +113,6 @@
                 <li>.NET</li>
                 <li>Angular</li>
                 <li>Rails</li>
-                <li>More</li>
             </ul>
         </div>
     </section>
@@ -122,7 +121,11 @@
         <div class="room-detail">
             <header>
                 <img src="../public/img/vue.png" alt="vue">
-                <div class="card-title"><span class="card-subject">vuejs</span>/<span class="card-room">vue</span></div>
+                <a id="card-header" href="/vuejs/vue">
+                    <div class="card-title">
+                        <span class="card-subject">vuejs</span>/<span class="card-room">vue</span>
+                    </div>
+                </a>
             </header>
             <p>
                 NO LONGER MAINTAINED: Please migrate to http://chat.vuejs.org/ for the new and improved community chat

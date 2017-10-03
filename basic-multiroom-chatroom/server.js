@@ -1,4 +1,6 @@
-let app = require('express')();
+let express = require('express');
+let path = require('path');
+let app = express();
 let server = require('http').Server(app);
 let io = require('socket.io')(server);
 let PORT = 3000;
@@ -7,7 +9,9 @@ server.listen(PORT, function () {
 	console.log("listening on port: " + PORT);
 });
 
-app.get('/', function (req, res) {
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/room/:id', function (req, res) {
 	res.sendFile(__dirname + '/public/html/index.html');
 });
 
@@ -24,14 +28,30 @@ io.on('connection', function (socket) {
 			roomList[roomId] = [];
 		}
 		roomList[roomId].push(username);
-		io.to(roomId).emit('enter', socket.nickName + " come in!");
+		console.log(roomList);
+		socket.join(roomId);
+		socket.to(roomId).emit('enter', username + " come in");
+		socket.emit('enter', username + " come in!");
 	});
 
 	socket.on("message", function (str) {
-		io.to(roomId).emit("message", socket.nickName + " says: " + str);
+		io.emit("message", "这是发给包括自己在内的所有人");
 	});
 
 	socket.on("disconnect", function (str) {
-		io.to(roomId).emit("leave", socket.nickName + " left!");
+		socket.to(roomId).emit("leave", str + " left!");
 	});
 });
+
+
+/*
+* 几种发送方式的区别
+*1.socket.emit()    发送消息给自己的服务端
+*
+*2.socket.broadcast()   发送消息给除自己以外的所有人
+*
+*3.io.emit()            发送消息给所有人
+*
+*4.socket.to(roomId).emit()    发送给这个房间内除自己之外的所有人
+*
+* */

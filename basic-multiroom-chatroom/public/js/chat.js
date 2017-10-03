@@ -1,8 +1,21 @@
-let socket = io.connect('http://localhost:3000');
-//join事件发送昵称
-socket.emit("join", prompt("What is your nickName?"));
-//显示聊天窗口
-document.getElementById("chat").style.display = "block";
+let username =  prompt("What is your nickName?");
+
+let socket = io();
+socket.on("connect", function () {
+	//join事件发送昵称
+	socket.emit("join", username);
+
+	socket.on('enter', function (data) {
+		showMessage("enter", data);
+	});
+	socket.on('message', function (data) {
+		showMessage("message", data);
+	});
+	socket.on('leave', function (data) {
+		showMessage("leave", data);
+	});
+});
+
 
 function showMessage(type, str) {
 	let div = document.createElement("div");
@@ -21,14 +34,4 @@ document.getElementById("send").addEventListener("click", function () {
 	if (text) {
 		socket.emit("message", text);
 	}
-});
-
-socket.on('enter', function (data) {
-	showMessage("enter", data);
-});
-socket.on('message', function (data) {
-	showMessage("message", data);
-});
-socket.on('leave', function (data) {
-	showMessage("leave", data);
 });

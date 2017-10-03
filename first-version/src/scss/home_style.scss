@@ -90,13 +90,11 @@ $buttonColor: #f68d42;     //按钮颜色
   }
 /*最后一个more元素*/
   .more-subject{
-    &:last-child{
-      margin: 4px;
-      background-color: #fff;
-      border: 1px solid #f2f0ed;
-      &:hover{
-        background-color: #fafafa;
-      }
+    margin: 4px;
+    background-color: #fff;
+    border: 1px solid #f2f0ed;
+    &:hover{
+      background-color: #fafafa;
     }
   }
 }

@@ -157,7 +157,8 @@ main .header .func-btn {
         border-radius: 6px;
         color: #fff;
         font-size: 12px;
-        cursor: pointer; }
+        cursor: pointer;
+        outline: none; }
       .chatroom-container .room-info .add-people-btn p {
         width: 150px;
         margin: 5px 0;
