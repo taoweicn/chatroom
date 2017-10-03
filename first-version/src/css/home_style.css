@@ -72,11 +72,11 @@
       cursor: pointer; }
       .subject-list ul li:hover {
         background-color: #e7e4de; }
-  .subject-list .more-subject:last-child {
+  .subject-list .more-subject {
     margin: 4px;
     background-color: #fff;
     border: 1px solid #f2f0ed; }
-    .subject-list .more-subject:last-child:hover {
+    .subject-list .more-subject:hover {
       background-color: #fafafa; }
 
 /*房间列表*/
