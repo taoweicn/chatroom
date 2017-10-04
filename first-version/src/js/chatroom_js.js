@@ -7,4 +7,13 @@
 			$("body").css("overflow", "auto");
 		});
 	});
+
+
 })(jQuery);
+
+let socket = io();
+socket.on('connect', function () {
+	socket.emit('join', '333');
+	socket.emit('message', 'hhhhhh');
+});
+

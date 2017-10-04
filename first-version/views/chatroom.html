@@ -693,6 +693,27 @@
 
 </main>
 
+<!--提示登陆的弹出层-->
+<div class="prompt-to-login">
+    <div class="login-dialog">
+        <div class="login-dialog-header">
+            <!--logo图案-->
+            <svg>
+                <rect x="15" y="5" width="2" height="10"></rect>
+                <rect x="10" y="5" width="2" height="20"></rect>
+                <rect x="5" y="5" width="2" height="20"></rect>
+                <rect width="2" height="15"></rect>
+            </svg>
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+        <div class="login-dialog-body">
+            <input type="text" id="input-account" placeholder="请输入你的账户">
+            <input type="password" id="input-password" placeholder="请输入你的密码">
+            <span>如账户不存在将直接被创建</span>
+        </div>
+    </div>
+</div>
+
 <!--创建新房间弹出的遮罩层-->
 <div class="mask">
     <div class="close-btn">
@@ -715,6 +736,7 @@
 </div>
 
 
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../src/js/chatroom_js.js"></script>
 </body>
