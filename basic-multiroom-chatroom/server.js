@@ -9,7 +9,7 @@ server.listen(PORT, function () {
 	console.log("listening on port: " + PORT);
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/room/:id', function (req, res) {
 	res.sendFile(__dirname + '/public/html/index.html');
