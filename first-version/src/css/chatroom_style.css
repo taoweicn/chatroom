@@ -82,6 +82,10 @@ main .header .func-btn {
                 cursor: pointer; }
         .chatroom-container .chat-area .dialog .chat-message .unread-message {
           background-color: #e9f5ee; }
+        .chatroom-container .chat-area .dialog .chat-message .system-message {
+          background-color: #fae0e0; }
+          .chatroom-container .chat-area .dialog .chat-message .system-message .message-content {
+            font-weight: 600; }
       .chatroom-container .chat-area .dialog .continuous-message {
         padding: 1px 10px 3px; }
     .chatroom-container .chat-area .input-area {
@@ -106,16 +110,15 @@ main .header .func-btn {
           border-radius: 4px; }
       .chatroom-container .chat-area .input-area .input-box {
         width: 100%; }
-        .chatroom-container .chat-area .input-area .input-box textarea {
-          width: calc(100% - 4px);
-          height: calc(100% - 15px);
-          margin-top: 15px;
+        .chatroom-container .chat-area .input-area .input-box input {
+          width: 100%;
+          height: 100%;
           line-height: 20px;
           font-family: "Microsoft YaHei Light";
           border-style: none;
           resize: none;
           outline: none; }
-          .chatroom-container .chat-area .input-area .input-box textarea::placeholder {
+          .chatroom-container .chat-area .input-area .input-box input::placeholder {
             font-family: "Microsoft YaHei Light"; }
   .chatroom-container .room-info {
     width: 250px;
@@ -136,7 +139,7 @@ main .header .func-btn {
           content: "";
           position: absolute;
           top: 4px;
-          left: -6px;
+          left: -4px;
           width: 4px;
           height: 4px;
           border: 2px solid white;
@@ -145,7 +148,7 @@ main .header .func-btn {
       .chatroom-container .room-info .room-people .avatar-images img {
         width: 25px;
         height: 25px;
-        margin: 0 4px 4px 0;
+        margin: 0 5px 5px 0;
         border-radius: 4px; }
     .chatroom-container .room-info .add-people-btn {
       padding: 10px 0 0 15px; }
@@ -207,14 +210,14 @@ main .header .func-btn {
 .prompt-to-login {
   position: fixed;
   z-index: 99;
-  display: flex;
+  display: none;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); }
   .prompt-to-login .login-dialog {
     width: 500px;
     height: 260px;
-    margin: auto;
+    margin: 10% auto 0;
     background-color: #fff;
     border-radius: 5px; }
     .prompt-to-login .login-dialog .login-dialog-header {

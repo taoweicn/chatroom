@@ -5,7 +5,7 @@ let app = express();
 let routers = require('./routes/index');
 let mongoose = require('mongoose');
 
-let PORT = 3000;
+const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, '/')));
 app.use('/', routers);
@@ -32,14 +32,14 @@ let Schema = mongoose.Schema;
 
 //房间内的聊天记录
 let chatRecord = new Schema({
-	speaker   : String,
+	speaker   : {account: String, nickName: String},
 	time      : Date,
 	content   : String
 });
 //房间列表信息
 let roomList = new Schema({
 	roomName  : String,
-	roomPeople: Array,
+	roomPeople: {account: String, nickName: String},
 	chatRecord: [chatRecord]
 });
 
@@ -50,15 +50,15 @@ let chatRoom = mongoose.model('chatRoom', roomList);
 
 
 io.on('connection', function (socket) {
+	let user;
 	//获取当前用户的url,从而截取房间id
 	let url = socket.request.headers.referer;
 	let split_arr = url.split('/');
 	let roomName = split_arr[split_arr.length-1];
-	let user;
 
 	// 监听加入事件
-	socket.on('join', function (userName) {
-		user = userName;
+	socket.on('join', function (userInfo) {
+		user = userInfo;
 		// 将用户加入到房间
 		chatRoom.find({roomName: roomName}, function (err, result) {
 			if (err) {
@@ -74,37 +74,44 @@ io.on('connection', function (socket) {
 						return false;
 					}
 					console.log('新建房间 ' + roomName);
-					chatRoom.update({roomName: roomName}, {$push: {roomPeople: user}}, function (err) {
-						if (err) {
-							console.log(err);
-							return false;
-						}
-						// 加入房间
-						socket.join(roomName);
-						// 向房间内其他人广播
-						socket.to(roomName).emit('enter', user + ' 进入了房间');
-					});
 				});
 			}
+
+			chatRoom.update({roomName: roomName}, {$push: {roomPeople: user}}, function (err) {
+				if (err) {
+					console.log(err);
+					return false;
+				}
+				// 加入房间
+				socket.join(roomName);
+				//发送此房间的信息
+				chatRoom.findOne({roomName: roomName}, function (err, result) {
+					if (err) {
+						console.log(err);
+						return false;
+					}
+					socket.emit('join', result);
+				});
+			});
+			// 向房间内其他人广播
+			socket.to(roomName).emit('enter', user);
 		});
 	});
 
 	// 监听客户端发送的消息
 	socket.on('message', function (msg) {
 		// 验证用户是否在本房间
-		chatRoom.find({roomName: roomName}, function (err, result) {
-			if (result[0].roomPeople.indexOf(user) < 0) {
+		chatRoom.findOne({roomName: roomName}, function (err, result) {
+			/*if (result.roomPeople && result.roomPeople.indexOf(user) < 0) {
 				console.log(user + ' 不在此房间');
 				return false;
-			}
+			}*/
 		});
 
 		//给其他人广播消息，自己则使用回调来确定是否发送成功
-		socket.to(roomName).emit('message', user + ' 说 ' + msg)	;
+		socket.to(roomName).emit('message', msg)	;
 		// 存储聊天记录
-		chatRoom.update({roomName: roomName},
-			{$push: {chatRecord: {speaker: user, time: new Date(), content: msg}}},
-			function (err) {
+		chatRoom.update({roomName: roomName}, {$push: {chatRecord: msg}}, function (err) {
 				if (err) {
 					console.log(err);
 					return false;
@@ -120,11 +127,18 @@ io.on('connection', function (socket) {
 				console.log(err);
 				return false;
 			}
-			chatRoom.update({roomName: roomName}, {$pull: {roomPeople: user}});
-			socket.to(roomName).emit('leave', user + ' 离开了房间');
+			chatRoom.update({roomName: roomName}, {$pull: {roomPeople: user}}, function (err) {
+				if (err) {
+					console.log(err);
+					return false;
+				}
+			});
+			socket.to(roomName).emit('leave', user);
+			console.log(user.nickName + ' 离开了房间');
 		});
 	});
 });
+
 
 //处理404错误
 app.use(function (req, res, next) {
@@ -136,3 +150,16 @@ app.use(function (req, res, next) {
 server.listen(PORT, function () {
 	console.log('Chat Room is listening on port ' + PORT);
 });
+
+
+/*笔记区
+*
+* 1.cookie-parser有毒
+* 一旦加入这个中间件路由就失效
+*2.客户端的socket建立连接是在调用io开始的，
+* 即在socket = io()这一步
+*3.MongoDB会把Date格式的数据转换为字符串
+*4.MongoDB另一大神坑，必须写回调update才会执行成功
+*
+*
+* */
