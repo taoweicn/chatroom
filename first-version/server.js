@@ -56,6 +56,16 @@ io.on('connection', function (socket) {
 	let split_arr = url.split('/');
 	let roomName = split_arr[split_arr.length-1];
 
+	if (roomName === 'explore') {
+		chatRoom.find({}, function (err, data) {
+			if (err) {
+				console.log(err);
+				return false;
+			}
+			socket.emit('explore', data);
+		});
+		return;
+	}
 	// 监听加入事件
 	socket.on('join', function (userInfo) {
 		user = userInfo;
@@ -68,12 +78,13 @@ io.on('connection', function (socket) {
 			if (!result.length) {
 				//房间不存在则新建
 				console.log('房间不存在');
-				new chatRoom({roomName: roomName}).save(function (err) {
+				new chatRoom({roomName: roomName}).save(function (err, newRoom) {
 					if (err) {
 						console.log(err);
 						return false;
 					}
-					console.log('新建房间 ' + roomName);
+					io.emit('new room', newRoom);
+					console.log(' 新建房间 ' + roomName);
 				});
 			}
 
@@ -91,10 +102,10 @@ io.on('connection', function (socket) {
 						return false;
 					}
 					socket.emit('join', result);
+					// 向房间内其他人广播
+					socket.to(roomName).emit('enter', {user: user, roomInfo: result});
 				});
 			});
-			// 向房间内其他人广播
-			socket.to(roomName).emit('enter', user);
 		});
 	});
 
@@ -132,13 +143,25 @@ io.on('connection', function (socket) {
 					console.log(err);
 					return false;
 				}
+				chatRoom.findOne({roomName: roomName}, function (err, result) {
+					socket.to(roomName).emit('leave', {user: user, roomInfo: result});
+				});
 			});
-			socket.to(roomName).emit('leave', user);
 			console.log(user.nickName + ' 离开了房间');
 		});
 	});
 });
 
+
+app.post('/getRoomList', function (req, res) {
+	chatRoom.find({}, function (err, roomList) {
+		if (err) {
+			console.log(err);
+			return false;
+		}
+		res.send(roomList);
+	})
+});
 
 //处理404错误
 app.use(function (req, res, next) {
