@@ -87,6 +87,13 @@ $buttonColor: #f68d42;     //按钮颜色
         background-color: #e7e4de;
       }
     }
+    .active{
+      background-color: #f68d42;
+      color: #fff;
+      &:hover{
+        background-color: #f68d42;
+      }
+    }
   }
 /*最后一个more元素*/
   .more-subject{
@@ -128,6 +135,7 @@ $buttonColor: #f68d42;     //按钮颜色
       img{
         width: 30px;
         height: 30px;
+        border-radius: 3px;
       }
       .card-title{
         height: 30px;

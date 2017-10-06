@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
 * 几种发送方式的区别
 *1.socket.emit()    发送消息给自己的服务端
 *
-*2.socket.broadcast()   发送消息给除自己以外的所有人
+*2.socket.broadcast.emit()   发送消息给除自己以外的所有人
 *
 *3.io.emit()            发送消息给所有人
 *

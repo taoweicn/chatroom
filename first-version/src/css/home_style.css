@@ -72,6 +72,11 @@
       cursor: pointer; }
       .subject-list ul li:hover {
         background-color: #e7e4de; }
+    .subject-list ul .active {
+      background-color: #f68d42;
+      color: #fff; }
+      .subject-list ul .active:hover {
+        background-color: #f68d42; }
   .subject-list .more-subject {
     margin: 4px;
     background-color: #fff;
@@ -105,7 +110,8 @@
       display: flex; }
       .room-list .room-detail header img {
         width: 30px;
-        height: 30px; }
+        height: 30px;
+        border-radius: 3px; }
       .room-list .room-detail header .card-title {
         height: 30px;
         line-height: 30px;

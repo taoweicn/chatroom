@@ -9,7 +9,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 // router.use(cookieParser);
 router.use(session({
 	secret: 'my secret', // 建议使用 128 个字符的随机字符串
-	cookie: { maxAge: 60 * 1000 },
+	cookie: { maxAge: 10 * 60 * 1000 },
 	resave: true,
 	saveUninitialized: true
 }));
@@ -40,7 +40,7 @@ router.post('/login', function (req, res) {
 router.post('/loggedIn', function (req, res) {
 	let result = {};
 	if (req.session.loggedIn) {
-		result.loggedIn = false;
+		result.loggedIn = true;
 		result.user = {
 			account: req.session.account,
 		  nickName: req.session.nickName

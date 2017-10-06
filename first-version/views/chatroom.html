@@ -51,11 +51,11 @@
 <main>
     <header class="header">
         <div class="room-logo">
-            <img src="../public/img/vue.png" alt="vue logo">
+            <img src="../public/img/chatroom.png" alt="房间头像">
         </div>
-        <p class="room-name">vuejs/vue</p>
+        <p class="room-name">房间名</p>
         <span class="room-description">
-            NO LONGER MAINTAINED: Please migrate to http://chat.vuejs.org/ for the new and improved community chat
+            这里应该是条简介，但如果没有的话那看到就是现在这句话。
         </span>
         <!--顶部右上角按钮组-->
         <div class="func-btn">
@@ -64,7 +64,7 @@
             <i class="fa fa-sliders" aria-hidden="true"></i>
         </div>
         <div class="nav-avatar">
-            <img>
+            <img src="../public/img/user.png" alt="user">
         </div>
     </header>
 
@@ -94,7 +94,7 @@
                             </div>
                             <!--消息的具体内容-->
                             <div class="message-words">
-                                欢迎加入本聊天室！
+                                欢迎加入本聊天室！当前有<span class="room-people-num">0</span>人在线。
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,6 @@
                             </div>
                             <!--消息的具体内容-->
                             <div class="message-words">
-
                             </div>
                         </div>
                     </div>
@@ -126,7 +125,7 @@
             <!--输入框-->
             <div class="input-area">
                 <div class="nav-avatar">
-                    <img src="../public/img/avatar.jpg" alt="头像">
+                    <img src="../public/img/user.png" alt="user">
                 </div>
                 <div class="input-box">
                     <input id="input-textarea" placeholder="Click here to type a chat message.">
@@ -142,7 +141,7 @@
             </div>
             <div class="add-people-btn">
                 <button>ADD</button>
-                <p>SEE ALL<span>(<span id="room-people-num"></span>PEOPLE)</span></p>
+                <p>SEE ALL<span>(<span class="room-people-num">0</span>PEOPLE)</span></p>
             </div>
             <!--房间活动-->
             <div class="room-activity">

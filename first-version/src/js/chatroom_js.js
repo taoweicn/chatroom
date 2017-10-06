@@ -1,6 +1,7 @@
 (function ($) {
 	let user = {}, lastSender = {};     //用户信息,上一位发送信息的人
-	let avatarImgUrl = 'http://dummyimage.com/30x30/8cb8ff/FFF&text=';    	//头像前缀地址
+	// let avatarImgUrl = 'http://dummyimage.com/30x30/8cb8ff/FFF&text=';    	//头像前缀地址
+	let avatarImgUrl = 'https://placeimg.com/30/30/people';    	//头像前缀地址
 
 	// 判断是否登录
 	$.post('/loggedIn', function (result) {
@@ -61,17 +62,18 @@
 			socket.on('join', function (data) {
 				//聊天记录
 				loadChatRecord(data.chatRecord);
-				//房间名
+				//房间名和图标
 				document.title = data.roomName;
+				$('.room-name').html(data.roomName);
+				$('.room-logo img').attr('src', `../public/img/room-logo/${data.roomName}.png`);
 				//房间人数
 				showRoomPeople(data.roomPeople);
-
 			});
 		});
 
 		//输入框事件
 		$('#input-textarea').on('keydown', function (event) {
-			if (event.keyCode === 13 && !$(this).val()) {
+			if (event.keyCode === 13 && $(this).val()) {
 				let msgInfo = {
 					content: $(this).val(),
 					time: new Date(),
@@ -89,23 +91,25 @@
 		});
 
 		/*监听其他人进入房间*/
-		socket.on('enter', function (user) {
+		socket.on('enter', function (userAndRoomInfo) {
 			let data = {
 				speaker: {nickName: '系统消息', account: '系统消息'},
 				time: new Date(),
-				content: `【${user.nickName}@${user.account}】进入了本房间！`
+				content: `【${userAndRoomInfo.user.nickName}@${userAndRoomInfo.user.account}】进入了本房间！`
 			};
 			showMessage(data, 'system');
+			showRoomPeople(userAndRoomInfo.roomInfo.roomPeople);
 		});
 
 		/*监听其他人离开房间*/
-		socket.on('leave', function (user) {
+		socket.on('leave', function (userAndRoomInfo) {
 			let data = {
 				speaker: {nickName: '系统消息', account: '系统消息'},
 				time: new Date(),
-				content: `【${user.nickName}@${user.account}】离开了房间~~~`
+				content: `【${userAndRoomInfo.user.nickName}@${userAndRoomInfo.user.account}】离开了房间~~~`
 			};
 			showMessage(data, 'system');
+			showRoomPeople(userAndRoomInfo.roomInfo.roomPeople);
 		})
 
 
@@ -114,12 +118,21 @@
 	/*加载聊天记录*/
 	function loadChatRecord(data) {
 		for (let i = 0; i < data.length; i++) {
-			showMessage(data[i]);
+			showMessage(data[i], 'user', true);
+		}
+		let dialog = $('.dialog');
+		let scrollHeight = dialog.prop("scrollHeight");
+		//加载时间
+		if (data.length < 20) {
+			dialog.animate({scrollTop: scrollHeight}, data.length * 100);
+		}
+		else {
+			dialog.animate({scrollTop: scrollHeight}, 2000);
 		}
 	}
 
 	/*页面显示一条消息*/
-	function showMessage(data, type) {
+	function showMessage(data, type, noScroll) {
 		let dialog = $('.dialog'),
 			nickName = data.speaker.nickName,
 			account = data.speaker.account,
@@ -164,10 +177,12 @@
 		}
 
 		dialog.append(message);
+		if (!noScroll) {
+			//滚到底部
+			let scrollHeight = dialog.prop("scrollHeight");
+			dialog.animate({scrollTop: scrollHeight}, 400);
+		}
 
-		//滚到底部
-		let scrollHeight = dialog.prop("scrollHeight");
-		dialog.animate({scrollTop:scrollHeight}, 400);
 	}
 
 	/*将一位数字变成两位字符串*/
@@ -182,10 +197,11 @@
 
 	/*显示房间人数*/
 	function showRoomPeople(data) {
-		$('#room-people-num').html(data.length);
+		$('.room-people-num').html(data.length);
+		$('.avatar-images').html('');
 		for (let i = 0; i < data.length; i++) {
 			let div = $('<div><img></div>');
-			div.find('img').attr('src', avatarImgUrl + data[i].account.substr(data[i].nickName.length-1));
+			div.find('img').attr('src', avatarImgUrl + data[i].nickName.substr(data[i].nickName.length-1));
 			div.appendTo('.avatar-images');
 		}
 	}
