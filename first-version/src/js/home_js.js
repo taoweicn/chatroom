@@ -24,7 +24,7 @@
 		});
 	});
 
-	/*b绑定More和Less按钮的点击事件*/
+	/*绑定More和Less按钮的点击事件*/
 	function bindClickEvent(element) {
 		if(element.html() === 'More'){
 			element.off('click').on('click', function () {
