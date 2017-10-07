@@ -111,6 +111,9 @@
             let small = $(`<small>@${people.account}</small>`),
               li = $(`<li>${people.nickName} </li>`);
             li.append(small);
+            if (i ===0 ) {
+              li.addClass('select');
+            }
             li.on('click', function () {
                 let end = $(this).html().indexOf('<');
                 if (text[text.length-1] === '@') {
@@ -253,11 +256,23 @@
 
       //如果用户没有看当前窗口，就加上未阅读的样式
       if (document.hidden) {
+        document.title = '你有新的未读消息~~';
+        let titleScroll = setInterval(scrollTitle, 300);
+
         message.find('.message-container').addClass('unread-message')
           .on('mouseover', function () {
             //鼠标经过就移除这个样式
             $(this).removeClass('unread-message');
+            clearInterval(titleScroll);
+            document.title = roomName;
           });
+      }
+      
+      function scrollTitle() {
+        let str = document.title,
+          firstInfo = str[0],
+          lastInfo = str.slice(1);
+        document.title = lastInfo + firstInfo;
       }
     }
     else {
