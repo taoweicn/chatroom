@@ -119,8 +119,8 @@
             });
             inputTip.append(li);
           }
-          //有人才显示列表
-          if (roomInfo.roomPeople.length){
+          //有人才显示列表(不包括自己）
+          if (roomInfo.roomPeople.length > 1){
             inputTip.fadeIn(100).css('left', inputBox.caret('position').left);
           }
         });
