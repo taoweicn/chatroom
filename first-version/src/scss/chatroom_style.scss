@@ -130,7 +130,13 @@ main{
               }
             }
             .message-words {
-
+              a{
+                color: #3498db;
+                cursor: pointer;
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
             }
           }
         }

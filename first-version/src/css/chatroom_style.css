@@ -103,6 +103,11 @@ main .header {
                 margin-right: 20px;
                 color: rgba(170, 170, 170, 0.7);
                 cursor: pointer; }
+            .chatroom-container .chat-area .dialog .chat-message .message-container .message-content .message-words a {
+              color: #3498db;
+              cursor: pointer; }
+              .chatroom-container .chat-area .dialog .chat-message .message-container .message-content .message-words a:hover {
+                text-decoration: underline; }
         .chatroom-container .chat-area .dialog .chat-message .unread-message {
           background-color: #e9f5ee; }
         .chatroom-container .chat-area .dialog .chat-message .system-message {

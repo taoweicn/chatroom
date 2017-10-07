@@ -203,7 +203,8 @@
 
 		message.find('.user-nickName').html(nickName);
 		message.find('.user-account').html('@' + account);
-		message.find('.message-words').html(data.content);
+		let parsedLink = data.content.replace(/(https?:\/{2}[^\s]*)/g, '<a>$1</a>');
+		message.find('.message-words').html(parsedLink);
 
 		if (type !== 'system') {
       /*高亮@消息*/
