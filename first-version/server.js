@@ -6,7 +6,7 @@ let bodyParser = require('body-parser');
 let routers = require('./routes/index');
 let mongoose = require('mongoose');
 
-const PORT = 3000;
+const PORT = 80;
 
 app.use(express.static(path.join(__dirname, '/')));
 app.use(bodyParser.json());
