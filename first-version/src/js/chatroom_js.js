@@ -110,11 +110,8 @@
             }
             let small = $(`<small>@${people.account}</small>`),
               li = $(`<li>${people.nickName} </li>`);
-            li.append(small);
-            if (i ===0 ) {
-              li.addClass('select');
-            }
-            li.on('click', function () {
+            li.append(small)
+	            .on('click', function () {
                 let end = $(this).html().indexOf('<');
                 if (text[text.length-1] === '@') {
                   inputBox.val(inputBox.val() + $(this).html().slice(0, end));
