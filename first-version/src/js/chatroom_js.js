@@ -95,7 +95,7 @@
 		}).on('keyup', function () {
       let inputBox = $('#input-textarea'),
 	      text = inputBox.val();
-      //如果输入了@
+      //如果输入了@/at
       if (text[text.length-1] === '@' || text.slice(text.length - 2) === 'at') {
 
         $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
@@ -119,8 +119,10 @@
             });
             inputTip.append(li);
           }
-
-          inputTip.fadeIn(100).css('left', inputBox.caret('position').left);
+          //有人才显示列表
+          if (roomInfo.roomPeople.length){
+            inputTip.fadeIn(100).css('left', inputBox.caret('position').left);
+          }
         });
       }
       else {
