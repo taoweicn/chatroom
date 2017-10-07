@@ -93,9 +93,10 @@
 				$(this).val("");
 			}
 		}).on('keyup', function () {
-      let text = $(this).val();
+      let inputBox = $('#input-textarea'),
+	      text = inputBox.val();
       //如果输入了@
-      if (text[text.length-1] === '@') {
+      if (text[text.length-1] === '@' || text.slice(text.length - 2) === 'at') {
 
         $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
           let inputTip = $('#input-tip');
@@ -111,8 +112,7 @@
               li = $(`<li>${people.nickName} </li>`);
             li.append(small);
             li.on('click', function () {
-              let inputBox = $('#input-textarea'),
-                end = $(this).html().indexOf('<');
+                let end = $(this).html().indexOf('<');
               inputBox.val(inputBox.val() + $(this).html().slice(0, end));
               $('#input-tip').fadeOut(200);
               inputBox.focus();
@@ -120,7 +120,7 @@
             inputTip.append(li);
           }
 
-          inputTip.fadeIn(100).css('left', $(this).caret('position').left);
+          inputTip.fadeIn(100).css('left', inputBox.caret('position').left);
         });
       }
       else {
