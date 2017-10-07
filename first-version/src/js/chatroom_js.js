@@ -113,7 +113,12 @@
             li.append(small);
             li.on('click', function () {
                 let end = $(this).html().indexOf('<');
-              inputBox.val(inputBox.val() + $(this).html().slice(0, end));
+                if (text[text.length-1] === '@') {
+                  inputBox.val(inputBox.val() + $(this).html().slice(0, end));
+                }
+                else {
+                  inputBox.val(inputBox.val().slice(0, -2)+ '@' + $(this).html().slice(0, end));
+                }
               $('#input-tip').fadeOut(200);
               inputBox.focus();
             });
