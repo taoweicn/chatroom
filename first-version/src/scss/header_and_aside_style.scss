@@ -130,7 +130,8 @@ main{
     border-style: none;
     border-bottom: 3px solid #ed1965;
     color: rgba(255, 255, 255, 0.75);
-    &::placeholder{
+    &::placeholder {
+      font-family: "Microsoft YaHei Light";
       font-size: 30px;
       font-weight: 300;
       color: rgba(255, 255, 255, 0.5);
@@ -147,6 +148,11 @@ main{
       background-color: transparent;
       border-style: none;
       border-bottom: 1px solid #ed1965;
+      color: #fff;
+      &::placeholder {
+        font-family: "Microsoft YaHei Light";
+        color: #ddd;
+      }
     }
   }
   .mask-footer{
@@ -172,6 +178,11 @@ main{
       border-radius: 5px;
       color: rgba(255, 255, 255, 0.6);
       font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      &:hover {
+        background-color: rgba(91, 156, 137, 0.6);
+      }
     }
   }
 }

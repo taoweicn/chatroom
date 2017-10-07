@@ -81,7 +81,7 @@
 		function updatePeopleNum(roomInfo) {
 			$('.room-detail').each(function () {
 				let that = $(this);
-				if (that.find('.card-room').html().toUpperCase() === roomInfo.roomName.toUpperCase() && roomInfo.roomPeople) {
+				if (that.find('.card-room').html() === roomInfo.roomName && roomInfo.roomPeople) {
 					that.find('.user-count span').html(roomInfo.roomPeople.length);
 				}
 			});
@@ -104,7 +104,7 @@
 			roomDetail.find('.user-count span').html(data.roomPeople.length);
 		}
 		roomDetail.find('a').attr('href', 'room/' + data.roomName);
-		roomDetail.find('.card-logo').attr('src', `../public/img/room-logo/${data.roomName}.png`);
+		roomDetail.find('.card-logo').attr('src', data.roomLogoUrl);
 		roomDetail.appendTo('.room-list');
 	}
 

@@ -2,13 +2,17 @@ let express = require('express');
 let path = require('path');
 let http = require('http');
 let app = express();
+let bodyParser = require('body-parser');
 let routers = require('./routes/index');
 let mongoose = require('mongoose');
 
 const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, '/')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', routers);
+
 
 
 /*sock.io*/
@@ -27,6 +31,7 @@ mongoose.connect('mongodb://localhost:27017/chat-room', {useMongoClient: true}, 
 	}
 });
 
+
 //定义数据库模型
 let Schema = mongoose.Schema;
 
@@ -38,13 +43,15 @@ let chatRecord = new Schema({
 });
 //房间列表信息
 let roomList = new Schema({
-	roomName  : String,
-	roomPeople: {account: String, nickName: String},
-	chatRecord: [chatRecord]
+	roomName   : String,
+  roomLogoUrl: String,
+	roomPeople : {account: String, nickName: String},
+	chatRecord : [chatRecord]
 });
 
 //注册一个模型
 let chatRoom = mongoose.model('chatRoom', roomList);
+
 
 /*----数据库截止----*/
 
@@ -78,13 +85,13 @@ io.on('connection', function (socket) {
 			if (!result.length) {
 				//房间不存在则新建
 				console.log('房间不存在');
-				new chatRoom({roomName: roomName}).save(function (err, newRoom) {
+				new chatRoom({roomName: roomName, roomLogoUrl: '../public/img/chatroom.png'}).save(function (err, newRoom) {
 					if (err) {
 						console.log(err);
 						return false;
 					}
 					io.emit('new room', newRoom);
-					console.log(' 新建房间 ' + roomName);
+					console.log('新建房间 ' + roomName);
 				});
 			}
 
@@ -95,6 +102,7 @@ io.on('connection', function (socket) {
 				}
 				// 加入房间
 				socket.join(roomName);
+				console.log(user.nickName + ' 进入了房间 ' + roomName);
 				//发送此房间的信息
 				chatRoom.findOne({roomName: roomName}, function (err, result) {
 					if (err) {
@@ -147,21 +155,105 @@ io.on('connection', function (socket) {
 					socket.to(roomName).emit('leave', {user: user, roomInfo: result});
 				});
 			});
-			console.log(user.nickName + ' 离开了房间');
+			console.log(user.nickName + ' 离开了房间 ' + roomName);
 		});
 	});
 });
 
 
+/*获取房间列表*/
 app.post('/getRoomList', function (req, res) {
-	chatRoom.find({}, function (err, roomList) {
-		if (err) {
-			console.log(err);
-			return false;
-		}
-		res.send(roomList);
-	})
+  chatRoom.find({}, function (err, roomList) {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+    res.send(roomList);
+  })
 });
+
+/*获取人数列表*/
+app.post('/peopleList', function (req, res) {
+  chatRoom.findOne({roomName: req.body.roomName}, function (err, data) {
+    if (err) {
+      console.log(err);
+      return false;
+    }
+    res.send(data);
+  })
+});
+
+
+/*登录*/
+app.post('/login', function (req, res) {
+  let account = req.body.user.account,
+    nickName = req.body.user.nickName;
+  if (account && nickName) {
+    chatRoom.find({roomName: req.body.roomName}, function (err, data) {
+      if (err) {
+        res.send({status: false});
+        return false;
+      }
+      if (data.roomPeople) {
+        for (let i = 0; i < data.roomPeople.length; i++) {
+          let people = data.roomPeople[i];
+          console.log(people.nickName + '222' + nickName);
+          //判断是否重名
+          if (people.nickName === nickName || people.account === account) {
+            res.send({status: 'repeat'});
+            return;
+          }
+        }
+      }
+      else {
+        req.session.loggedIn = true;
+        req.session.account = account;
+        req.session.nickName = nickName;
+        res.send({status: true});
+      }
+    });
+  }
+  else {
+    res.send({status: false});
+  }
+});
+
+/*新建房间功能*/
+app.post('/createRoom', function (req, res) {
+  let url = '', roomName = req.body.roomName;
+  if (req.body.roomLogoUrl) {
+    url = req.body.roomLogoUrl;
+  }
+  else {
+    url = '../public/img/chatroom.png';
+  }
+  chatRoom.find({roomName: roomName}, function (err, result) {
+    if (err) {
+      console.log(err);
+      res.send({status: false});
+      return false;
+    }
+    if (!result.length) {
+      //房间不存在则新建
+      console.log('房间不存在');
+      new chatRoom({roomName: roomName, roomLogoUrl: url}).save(function (err, newRoom) {
+        if (err) {
+          console.log(err);
+          res.send({status: false});
+          return false;
+        }
+        io.emit('new room', newRoom);
+        res.send({status: true});
+        console.log('新建房间 ' + roomName);
+      });
+    }
+    else {
+      res.send({status: 'exist'});
+    }
+  });
+});
+
+
 
 //处理404错误
 app.use(function (req, res, next) {

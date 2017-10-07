@@ -1,5 +1,7 @@
 (function ($) {
 	let user = {}, lastSender = {};     //用户信息,上一位发送信息的人
+  let split_arr = window.location.href.split('/'),
+    roomName = split_arr[split_arr.length-1];
 	// let avatarImgUrl = 'http://dummyimage.com/30x30/8cb8ff/FFF&text=';    	//头像前缀地址
 	let avatarImgUrl = 'https://placeimg.com/30/30/people';    	//头像前缀地址
 
@@ -7,7 +9,7 @@
 	$.post('/loggedIn', function (result) {
 		// 如果有已登录的session
 		if (result.loggedIn) {
-			user = JSON.parse(JSON.stringify(result.user));
+			user = result.user;
 			//加入房间
 			joinRoom(result.user);
 		}
@@ -29,14 +31,17 @@
 							"account": account,
 							"nickName": nickName
 						};
-						$.post('/login', user, function (result) {
-							if (result) {
+						$.post('/login', {user: user, roomName: roomName}, function (result) {
+							if (result.status === true) {
 								joinRoom(user);
 								$('#login-tip').html('登陆成功!').css('color', 'green');
 								// 弹出框隐藏
 								$('.prompt-to-login').fadeOut();
 							}
-							else {
+							else if (result.status === 'repeat') {
+                $('#login-tip').html('昵称或账户与已有用户重复！').css('color', 'red');
+              }
+ 							else {
 								$('#login-tip').html('登录失败，请重试！').css('color', 'red');
 							}
 						});
@@ -53,7 +58,9 @@
 
 	/*加入房间*/
 	function joinRoom(user) {
-		$(".nav-avatar img").attr('src', avatarImgUrl + user.nickName.substr(user.nickName.length-1, 1));
+	  //加载用户头像
+		$(".nav-avatar img").attr('src', avatarImgUrl + user.nickName[user.nickName.length-1]);
+		$(".avatar img").attr('src', avatarImgUrl + user.nickName[user.nickName.length-1]);
 		//加入房间
 		let socket = io();
 		socket.on('connect', function () {
@@ -65,7 +72,7 @@
 				//房间名和图标
 				document.title = data.roomName;
 				$('.room-name').html(data.roomName);
-				$('.room-logo img').attr('src', `../public/img/room-logo/${data.roomName}.png`);
+				$('.room-logo img').attr('src', data.roomLogoUrl);
 				//房间人数
 				showRoomPeople(data.roomPeople);
 			});
@@ -73,9 +80,11 @@
 
 		//输入框事件
 		$('#input-textarea').on('keydown', function (event) {
-			if (event.keyCode === 13 && $(this).val()) {
+		  let text = $(this).val();
+		  //发送确认
+			if (event.keyCode === 13 && text) {
 				let msgInfo = {
-					content: $(this).val(),
+					content: text,
 					time: new Date(),
 					speaker: user
 				};
@@ -83,7 +92,41 @@
 				showMessage(msgInfo);
 				$(this).val("");
 			}
-		});
+		}).on('keyup', function () {
+      let text = $(this).val();
+      //如果输入了@
+      if (text[text.length-1] === '@') {
+
+        $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
+          let inputTip = $('#input-tip');
+          inputTip.html("");
+
+          for (let i =0; i <roomInfo.roomPeople.length; i++) {
+            let people = roomInfo.roomPeople[i];
+            //不让自己出现在@列表
+            if (people.nickName === user.nickName || people.account === user.account) {
+              continue;
+            }
+            let small = $(`<small>@${people.account}</small>`),
+              li = $(`<li>${people.nickName} </li>`);
+            li.append(small);
+            li.on('click', function () {
+              let inputBox = $('#input-textarea'),
+                end = $(this).html().indexOf('<');
+              inputBox.val(inputBox.val() + $(this).html().slice(0, end));
+              $('#input-tip').fadeOut(200);
+              inputBox.focus();
+            });
+            inputTip.append(li);
+          }
+
+          inputTip.fadeIn(100).css('left', $(this).caret('position').left);
+        });
+      }
+      else {
+        $('#input-tip').fadeOut(200);
+      }
+    });
 
 		/*监听消息*/
 		socket.on('message', function (data) {
@@ -111,8 +154,6 @@
 			showMessage(data, 'system');
 			showRoomPeople(userAndRoomInfo.roomInfo.roomPeople);
 		})
-
-
 	}
 
 	/*加载聊天记录*/
@@ -139,13 +180,13 @@
 		  message = '';
 
 		//判断是否是连续发送消息
-		if (JSON.stringify(lastSender) === JSON.stringify(data.speaker) && type !== 'system'){  //如果是
+		if (compareObj(lastSender, data.speaker) && type !== 'system'){  //如果是
 			message = $('.chat-message').eq(1).clone(true);
 		}
 		else {
 			lastSender = JSON.parse(JSON.stringify(data.speaker));
 			message = $('.chat-message').eq(0).clone(true);
-			message.find('.user-avatar img').attr('src', avatarImgUrl + nickName.substr(nickName.length-1,1));
+			message.find('.user-avatar img').attr('src', avatarImgUrl + nickName[nickName.length-1]);
 
 			//先得把字符串转换为Date对象
 			if (typeof data.time !== "object"){
@@ -158,9 +199,44 @@
 		message.find('.user-account').html('@' + account);
 		message.find('.message-words').html(data.content);
 
+    /*高亮@消息*/
+		if (data.content.indexOf('@' + user.nickName) > -1 && !compareObj(data.speaker, user)) {
+      message.find('.message-container').addClass('mention-message')
+        .on('mouseover', function () {
+          //鼠标经过就移除这个样式
+          $(this).removeClass('mention-message');
+        });
+      //消息声音提醒
+      $('#mention-audio')[0].play();
+    }
+
+    /*添加@消息到activity*/
+    if (data.content.indexOf('@') > -1) {
+      let atList = data.content.match(/@([^\s]*?)\s/g);
+      if (!atList) {
+        return;
+      }
+      $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
+        for (let i = 0; i < atList.length; i++) {
+          item = atList[i];
+          for (let people of roomInfo.roomPeople) {
+            //如果不是@自己并且房间里有这个人，就添加到活动列表
+            if (item.trim().slice(1) !== user.nickName && people.nickName === item.trim().slice(1)) {
+              let activityList = $('.activity-list').eq(0).clone();
+              activityList.find('.activity-content span').eq(0).html(data.speaker.nickName)
+                .next().html('at')
+                .next().html(item.trim().slice(1));
+              activityList.find('.activity-time').html(`${intoTwoDigits(data.time.getHours())}点${intoTwoDigits(data.time.getMinutes())}分`);
+              $('#activity-lists').append(activityList);
+            }
+          }
+        }
+      });
+    }
+
 		if (type === 'system') {
-			//系统消息
-			message.find('.message-container').addClass('system-message')
+      //系统消息
+      message.find('.message-container').addClass('system-message')
 				.on('mouseover', function () {
 					//鼠标经过就移除这个样式
 					$(this).removeClass('system-message');
@@ -175,6 +251,17 @@
 					$(this).removeClass('unread-message');
 				});
 		}
+
+		//双击@事件
+		if (type !== 'system') {
+      message.on('dblclick', function () {
+        //排除自己
+        if (!compareObj(data.speaker, user)) {
+          let inputBox = $('#input-textarea');
+          inputBox.val(`${inputBox.val()}@${data.speaker.nickName} `);
+        }
+      });
+    }
 
 		dialog.append(message);
 		if (!noScroll) {
@@ -195,16 +282,42 @@
 		}
 	}
 
+	/*判断对象是否相等*/
+	function compareObj(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
+  }
+
 	/*显示房间人数*/
 	function showRoomPeople(data) {
 		$('.room-people-num').html(data.length);
 		$('.avatar-images').html('');
 		for (let i = 0; i < data.length; i++) {
 			let div = $('<div><img></div>');
-			div.find('img').attr('src', avatarImgUrl + data[i].nickName.substr(data[i].nickName.length-1));
+			div.find('img').attr('src', avatarImgUrl + data[i].nickName[data[i].nickName.length-1]);
 			div.appendTo('.avatar-images');
 		}
 	}
+
+	/*头像点击事件*/
+  $('.nav-avatar').on('click',function (e) {
+    e.stopPropagation();
+    $('.drop-box').slideToggle();
+  });
+  $(document).on('click',function () {
+    $('.drop-box').slideUp();
+  });
+  $('.logout').on('click', function () {
+    $.get('/logout', function (result) {
+      if (result) {
+        window.location.reload();
+      }
+    })
+  });
+
+  /*导航栏上星星点击事件*/
+  $('.fa-star-o').on('click', function () {
+    $(this).toggleClass('fa-star-o').toggleClass('fa-star');
+  });
 
 	/*绑定新建弹出层*/
 	$('.create-room').on('click', function () {

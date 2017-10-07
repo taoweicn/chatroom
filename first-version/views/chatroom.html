@@ -59,12 +59,16 @@
         </span>
         <!--顶部右上角按钮组-->
         <div class="func-btn">
-            <i class="fa fa-globe" aria-hidden="true"></i>
-            <i class="fa fa-star-o" aria-hidden="true"></i>
-            <i class="fa fa-sliders" aria-hidden="true"></i>
+            <a href="/explore"><i class="fa fa-globe" aria-hidden="true" title="More Rooms"></i></a>
+            <i class="fa fa-star-o" aria-hidden="true" title="Favorite This Room"></i>
+            <i class="fa fa-sliders" aria-hidden="true" title="Room Settings"></i>
         </div>
         <div class="nav-avatar">
             <img src="../public/img/user.png" alt="user">
+            <ul class="drop-box">
+                <li><a href="/explore">返回首页</a></li>
+                <li class="logout">注销</li>
+            </ul>
         </div>
     </header>
 
@@ -124,11 +128,12 @@
             </div>
             <!--输入框-->
             <div class="input-area">
-                <div class="nav-avatar">
+                <div class="avatar">
                     <img src="../public/img/user.png" alt="user">
                 </div>
                 <div class="input-box">
                     <input id="input-textarea" placeholder="Click here to type a chat message.">
+                    <ul id="input-tip"></ul>
                 </div>
             </div>
         </section>
@@ -146,69 +151,25 @@
             <!--房间活动-->
             <div class="room-activity">
                 <p>ACTIVITY</p>
-                <ul>
+                <ul id="activity-lists">
                     <li class="activity-list">
                         <div class="activity-content">
-                            <span>@texas2010</span>
-                            <span>banned</span>
-                            <span>@ComputerSettings</span>
+                            <span>taowei</span>
+                            <span>create</span>
+                            <span>chatroom</span>
                         </div>
-                        <div class="activity-time">10月02</div>
+                        <div class="activity-time">10月02日</div>
                     </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texas2010</span>
-                            <span>banned</span>
-                            <span>@ComputerSettings</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texas2010</span>
-                            <span>banned</span>
-                            <span>@ComputerSettings</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texasabcdefg2010</span>
-                            <span>banned</span>
-                            <span>@Siri</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texas2010</span>
-                            <span>banned</span>
-                            <span>@ComputerSettings</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texas2010</span>
-                            <span>banned</span>
-                            <span>@Computer</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
-                    <li class="activity-list">
-                        <div class="activity-content">
-                            <span>@texas</span>
-                            <span>banned</span>
-                            <span>@Computer</span>
-                        </div>
-                        <div class="activity-time">10月02</div>
-                    </li>
+
+
                 </ul>
             </div>
         </section>
     </section>
 
 </main>
+
+<audio id='mention-audio' src="../public/audio/mention.wav"></audio>
 
 <!--提示登陆的弹出层-->
 <div class="prompt-to-login">
@@ -240,21 +201,23 @@
         <p>Think big,</p>
         <p>start small, grow fast</p>
     </div>
-    <input type="text" placeholder="your community name">
+    <input id="room-name" type="text" placeholder="新建房间名">
     <div class="domain">
-        gitter.im/<input type="text" placeholder="your-community-domain">
+        网址：<input id="room-logo-url" type="text" placeholder="房间头像地址">
     </div>
     <div class="mask-footer">
-        do you want to start a community for one of your <a href="#">github projects</a>?
+        do you want to start a community for one of your <a href="https://github.com/">github projects</a>?
     </div>
     <div class="next">
-        <button>NEXT</button>
+        <button>DONE</button>
     </div>
 </div>
 
 
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../public/js/jquery.caret.js"></script>
 <script type="text/javascript" src="../src/js/chatroom_js.js"></script>
+<script type="text/javascript" src="../src/js/create_room_js.js"></script>
 </body>
 </html>

@@ -4,6 +4,8 @@ let router = express.Router();
 let bodyParser = require('body-parser');
 // let cookieParser = require('cookie-parser');
 let session = require('express-session');
+
+
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 // router.use(cookieParser);
@@ -26,16 +28,6 @@ router.get('/room/:roomName', function (req, res) {
 	res.sendFile(path.resolve(__dirname + '/../views/chatroom.html'));
 });
 
-/*登录*/
-router.post('/login', function (req, res) {
-	//暂时不判断用户是否存在
-	console.log(req.body);
-	req.session.loggedIn = true;
-	req.session.account = req.body.account;
-	req.session.nickName = req.body.nickName;
-	res.send(true);
-});
-
 /*判断是否登录*/
 router.post('/loggedIn', function (req, res) {
 	let result = {};
@@ -51,6 +43,13 @@ router.post('/loggedIn', function (req, res) {
 	}
 	res.send(result);
 });
+
+/*清除session*/
+router.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.send(true);
+});
+
 
 
 module.exports = router;

@@ -159,20 +159,21 @@
         <p>Think big,</p>
         <p>start small, grow fast</p>
     </div>
-    <input type="text" placeholder="your community name">
+    <input id="room-name" type="text" placeholder="新建房间名">
     <div class="domain">
-        gitter.im/<input type="text" placeholder="your-community-domain">
+        网址：<input id="room-logo-url" type="text" placeholder="房间头像地址">
     </div>
     <div class="mask-footer">
-        do you want to start a community for one of your <a href="#">github projects</a>?
+        do you want to start a community for one of your <a href="https://github.com/">github projects</a>?
     </div>
     <div class="next">
-        <button>NEXT</button>
+        <button>DONE</button>
     </div>
 </div>
 
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../public/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="../src/js/home_js.js"></script>
+<script type="text/javascript" src="../src/js/create_room_js.js"></script>
 </body>
 </html>

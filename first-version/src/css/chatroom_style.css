@@ -33,6 +33,27 @@ main .header {
       color: rgba(255, 255, 255, 0.9);
       margin: 0 10px;
       cursor: pointer; }
+  main .header .nav-avatar .drop-box {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    width: 100px;
+    padding: 5px 6px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+    main .header .nav-avatar .drop-box li {
+      padding: 0 10px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px; }
+      main .header .nav-avatar .drop-box li:hover {
+        background-color: #1589c9;
+        color: #fff; }
 
 /*聊天区域*/
 .chatroom-container {
@@ -49,7 +70,7 @@ main .header {
     width: calc(100% - 250px);
     border-right: 1px solid #eee; }
     .chatroom-container .chat-area .dialog {
-      height: calc(100% - 60px);
+      height: calc(100% - 70px);
       overflow: auto;
       /*某条消息*/ }
       .chatroom-container .chat-area .dialog .chat-message {
@@ -88,6 +109,8 @@ main .header {
           background-color: #fae0e0; }
           .chatroom-container .chat-area .dialog .chat-message .system-message .message-content {
             font-weight: 600; }
+        .chatroom-container .chat-area .dialog .chat-message .mention-message {
+          background-color: #faae9d; }
       .chatroom-container .chat-area .dialog .continuous-message {
         padding: 1px 10px 3px; }
     .chatroom-container .chat-area .input-area {
@@ -95,31 +118,55 @@ main .header {
       bottom: 0;
       display: flex;
       width: calc(100% - 1px);
-      min-height: 60px;
+      height: 69px;
       border-top: 1px solid rgba(0, 0, 0, 0.05);
       border-left: 1px solid #eee;
-      background-color: #fff;
+      background: #fff url("/public/img/chatroom-background-image.png");
       /*用户头像容器*/ }
-      .chatroom-container .chat-area .input-area .nav-avatar {
+      .chatroom-container .chat-area .input-area .avatar {
         width: 70px;
         height: 100%;
         text-align: center;
         /*用户头像图片*/ }
-        .chatroom-container .chat-area .input-area .nav-avatar img {
+        .chatroom-container .chat-area .input-area .avatar img {
           margin-top: 15px;
           width: 30px;
           height: 30px;
           border-radius: 4px; }
       .chatroom-container .chat-area .input-area .input-box {
-        width: 100%; }
+        position: relative;
+        width: 100%;
+        height: 40px;
+        margin: 12px 0 18px; }
+        .chatroom-container .chat-area .input-area .input-box #input-tip {
+          display: none;
+          position: absolute;
+          bottom: 28px;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 5px;
+          padding: 6px 3px 3px;
+          background-color: #fff; }
+          .chatroom-container .chat-area .input-area .input-box #input-tip li {
+            font-size: 16px;
+            height: 20px;
+            line-height: 20px;
+            padding: 0 10px;
+            cursor: default; }
+            .chatroom-container .chat-area .input-area .input-box #input-tip li:hover {
+              background: #0088cc;
+              color: #fff; }
+            .chatroom-container .chat-area .input-area .input-box #input-tip li small {
+              color: #999; }
+          .chatroom-container .chat-area .input-area .input-box #input-tip .select {
+            background: #0088cc;
+            color: #fff; }
         .chatroom-container .chat-area .input-area .input-box input {
-          width: 100%;
+          width: calc(100% - 10px);
           height: 100%;
-          line-height: 20px;
+          padding-right: 10px;
           font-family: "Microsoft YaHei Light";
-          border-style: none;
-          resize: none;
-          outline: none; }
+          border-style: none; }
           .chatroom-container .chat-area .input-area .input-box input::placeholder {
             font-family: "Microsoft YaHei Light"; }
   .chatroom-container .room-info {
@@ -185,7 +232,7 @@ main .header {
           color: #999; }
       .chatroom-container .room-info .room-activity .activity-list {
         display: flex;
-        padding: 8px 0 8px 25px;
+        padding: 6px 0 6px 25px;
         font-size: 12px; }
         .chatroom-container .room-info .room-activity .activity-list:hover {
           background-color: #f8f8f7; }
@@ -194,7 +241,8 @@ main .header {
           color: #666; }
           .chatroom-container .room-info .room-activity .activity-list .activity-content span {
             display: inline-block;
-            margin: 1px; }
+            margin: 1px;
+            letter-spacing: 1px; }
             .chatroom-container .room-info .room-activity .activity-list .activity-content span:nth-child(1), .chatroom-container .room-info .room-activity .activity-list .activity-content span:nth-child(3) {
               border: 1px solid rgba(192, 201, 200, 0.4);
               background-color: rgba(192, 201, 200, 0.2);
@@ -258,5 +306,8 @@ main .header {
       .prompt-to-login .login-dialog .login-dialog-body span {
         font-size: 12px;
         color: gray; }
+
+#mention-audio {
+  display: none; }
 
 /*# sourceMappingURL=chatroom_style.css.map */
