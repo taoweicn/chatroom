@@ -184,10 +184,9 @@
 			message = $('.chat-message').eq(1).clone(true);
 		}
 		else {
-			lastSender = JSON.parse(JSON.stringify(data.speaker));
+			lastSender = data.speaker;
 			message = $('.chat-message').eq(0).clone(true);
 			message.find('.user-avatar img').attr('src', avatarImgUrl + nickName[nickName.length-1]);
-
 			//先得把字符串转换为Date对象
 			if (typeof data.time !== "object"){
 				data.time = new Date(data.time);
@@ -199,61 +198,43 @@
 		message.find('.user-account').html('@' + account);
 		message.find('.message-words').html(data.content);
 
-    /*高亮@消息*/
-		if (data.content.indexOf('@' + user.nickName) > -1 && !compareObj(data.speaker, user)) {
-      message.find('.message-container').addClass('mention-message')
-        .on('mouseover', function () {
-          //鼠标经过就移除这个样式
-          $(this).removeClass('mention-message');
-        });
-      //消息声音提醒
-      $('#mention-audio')[0].play();
-    }
-
-    /*添加@消息到activity*/
-    if (data.content.indexOf('@') > -1) {
-      let atList = data.content.match(/@([^\s]*?)\s/g);
-      if (!atList) {
-        return;
+		if (type !== 'system') {
+      /*高亮@消息*/
+      if (data.content.indexOf('@' + user.nickName) > -1 && !compareObj(data.speaker, user)) {
+        message.find('.message-container').addClass('mention-message')
+          .on('mouseover', function () {
+            //鼠标经过就移除这个样式
+            $(this).removeClass('mention-message');
+          });
+        //消息声音提醒
+        $('#mention-audio')[0].play();
       }
-      $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
-        for (let i = 0; i < atList.length; i++) {
-          item = atList[i];
-          for (let people of roomInfo.roomPeople) {
-            //如果不是@自己并且房间里有这个人，就添加到活动列表
-            if (item.trim().slice(1) !== user.nickName && people.nickName === item.trim().slice(1)) {
-              let activityList = $('.activity-list').eq(0).clone();
-              activityList.find('.activity-content span').eq(0).html(data.speaker.nickName)
-                .next().html('at')
-                .next().html(item.trim().slice(1));
-              activityList.find('.activity-time').html(`${intoTwoDigits(data.time.getHours())}点${intoTwoDigits(data.time.getMinutes())}分`);
-              $('#activity-lists').append(activityList);
+
+      /*添加@消息到activity*/
+      if (data.content.indexOf('@') > -1) {
+        let atList = data.content.match(/@([^\s]*?)\s/g);
+        if (!atList) {
+          return;
+        }
+        $.post('/peopleList', {roomName: roomName}, function (roomInfo) {
+          for (let i = 0; i < atList.length; i++) {
+            let item = atList[i];
+            for (let people of roomInfo.roomPeople) {
+              //如果不是@自己并且房间里有这个人，就添加到活动列表
+              if (item.trim().slice(1) !== user.nickName && people.nickName === item.trim().slice(1)) {
+                let activityList = $('.activity-list').eq(0).clone();
+                activityList.find('.activity-content span').eq(0).html(data.speaker.nickName)
+                  .next().html('at')
+                  .next().html(item.trim().slice(1));
+                activityList.find('.activity-time').html(`${intoTwoDigits(data.time.getHours())}点${intoTwoDigits(data.time.getMinutes())}分`);
+                $('#activity-lists').append(activityList);
+              }
             }
           }
-        }
-      });
-    }
+        });
+      }
 
-		if (type === 'system') {
-      //系统消息
-      message.find('.message-container').addClass('system-message')
-				.on('mouseover', function () {
-					//鼠标经过就移除这个样式
-					$(this).removeClass('system-message');
-				});
-			message.find('.user-avatar img').attr('src', '../public/img/system-message.png');
-		}
-		else if (document.hidden) {
-			//如果用户没有看当前窗口，就加上未阅读的样式
-			message.find('.message-container').addClass('unread-message')
-				.on('mouseover', function () {
-					//鼠标经过就移除这个样式
-					$(this).removeClass('unread-message');
-				});
-		}
-
-		//双击@事件
-		if (type !== 'system') {
+      //双击@事件
       message.on('dblclick', function () {
         //排除自己
         if (!compareObj(data.speaker, user)) {
@@ -261,9 +242,28 @@
           inputBox.val(`${inputBox.val()}@${data.speaker.nickName} `);
         }
       });
+
+      //如果用户没有看当前窗口，就加上未阅读的样式
+      if (document.hidden) {
+        message.find('.message-container').addClass('unread-message')
+          .on('mouseover', function () {
+            //鼠标经过就移除这个样式
+            $(this).removeClass('unread-message');
+          });
+      }
+    }
+    else {
+      //系统消息
+      message.find('.message-container').addClass('system-message')
+        .on('mouseover', function () {
+          //鼠标经过就移除这个样式
+          $(this).removeClass('system-message');
+        });
+      message.find('.user-avatar img').attr('src', '../public/img/system-message.png');
     }
 
 		dialog.append(message);
+
 		if (!noScroll) {
 			//滚到底部
 			let scrollHeight = dialog.prop("scrollHeight");
