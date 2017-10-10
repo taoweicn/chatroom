@@ -6,41 +6,41 @@ let io = require('socket.io')(server);
 let PORT = 3000;
 
 server.listen(PORT, function () {
-	console.log("listening on port: " + PORT);
+  console.log("listening on port: " + PORT);
 });
 
 app.use(express.static(path.join(__dirname, '/')));
 
 app.get('/room/:id', function (req, res) {
-	res.sendFile(__dirname + '/public/html/index.html');
+  res.sendFile(__dirname + '/public/html/index.html');
 });
 
 let roomList = {};   //所有房间列表
 
 io.on('connection', function (socket) {
-	let url = socket.request.headers.referer;
-	let splitArr = url.split("/");
-	let roomId = splitArr[splitArr.length-1];
+  let url = socket.request.headers.referer;
+  let splitArr = url.split("/");
+  let roomId = splitArr[splitArr.length-1];
 
-	socket.on("join", function (username) {
-		//将用户归类到房间
-		if (!roomList[roomId]){
-			roomList[roomId] = [];
-		}
-		roomList[roomId].push(username);
-		console.log(roomList);
-		socket.join(roomId);
-		socket.to(roomId).emit('enter', username + " come in");
-		socket.emit('enter', username + " come in!");
-	});
+  socket.on("join", function (username) {
+    //将用户归类到房间
+    if (!roomList[roomId]){
+      roomList[roomId] = [];
+    }
+    roomList[roomId].push(username);
+    console.log(roomList);
+    socket.join(roomId);
+    socket.to(roomId).emit('enter', username + " come in");
+    socket.emit('enter', username + " come in!");
+  });
 
-	socket.on("message", function (str) {
-		io.emit("message", "这是发给包括自己在内的所有人");
-	});
+  socket.on("message", function (str) {
+    io.emit("message", "这是发给包括自己在内的所有人");
+  });
 
-	socket.on("disconnect", function (str) {
-		socket.to(roomId).emit("leave", str + " left!");
-	});
+  socket.on("disconnect", function (str) {
+    socket.to(roomId).emit("leave", str + " left!");
+  });
 });
 
 
