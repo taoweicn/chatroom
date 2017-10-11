@@ -126,6 +126,15 @@
           }
           //有人才显示列表(不包括自己）
           if (roomInfo.roomPeople.length > 1){
+            //针对textarea多行做的优化
+            let top;
+            if (inputBox.caret('position').top > 18) {
+              top = -2;
+            }
+            else {
+              top = inputBox.caret('position').top - 30;
+            }
+            inputTip.fadeIn(100).css('top', top);
             inputTip.fadeIn(100).css('left', inputBox.caret('position').left);
           }
         });
